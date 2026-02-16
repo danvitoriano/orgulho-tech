@@ -91,7 +91,7 @@ export default function Footer({
       "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1527/cc202be0-af57-4b32-b9c9-d1d7dc97bf85",
     href: "https://deco.cx",
   },
-  copyright = "© 2024 deco.cx. All rights reserved.",
+  copyright = "© 2026 deco.cx. All rights reserved.",
   bottomLinks = [
     { label: "Privacy Policy", href: "/" },
     { label: "Terms of Service", href: "/" },
@@ -100,9 +100,8 @@ export default function Footer({
   social = [
     { network: "Facebook", href: "" },
     { network: "Instagram", href: "" },
-    { network: "X - Twitter", href: "" },
     { network: "Linkedin", href: "" },
-    { network: "Youtube", href: "" },
+    { network: "Youtube", href: "https://youtube.com/playlist?list=PLndJnupfcnxFNZv1pt7Umj6UUUKcPxfHk&si=fGMpxoascUfFKVkb" },
   ],
 }: Props) {
 
