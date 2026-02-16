@@ -13,6 +13,7 @@
     "std/": "https://deno.land/std@0.190.0/",
     "partytown/": "https://denopkg.com/deco-cx/partytown@0.4.8/",
     "daisyui": "npm:daisyui@4.4.19",
+    "deco/observability/otel/config.ts": "./observability-stub.ts",
     "https://cdn.jsdelivr.net/gh/deco-cx/deco@1.83.3/observability/otel/config.ts": "./observability-stub.ts"
   },
   "tasks": {
@@ -50,7 +51,7 @@
       ]
     }
   },
-  "nodeModulesDir": "none",
+  "nodeModulesDir": "auto",
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
