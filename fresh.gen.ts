@@ -3,12 +3,14 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_app from "./routes/_app.tsx";
+import * as $api_meetup_signup from "./routes/api/meetup-signup.ts";
 
 import { type Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
     "./routes/_app.tsx": $_app,
+    "./routes/api/meetup-signup.ts": $api_meetup_signup,
   },
   islands: {},
   baseUrl: import.meta.url,

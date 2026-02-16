@@ -6,18 +6,32 @@
       "__resolveType": "menu header"
     },
     {
-      "__resolveType": "site/sections/Hero.tsx",
-      "title": "<h1><strong>Meetup Orgulho Tech</strong></h1>",
-      "placement": "left",
-      "cta": [
-        {
-          "href": "https://www.meetup.com/pt-BR/orgulhotech",
-          "text": "Junte-se no Meetup",
-          "outline": false
-        }
+      "__resolveType": "site/sections/MeetupSignupForm.tsx",
+      "title": "Meetup Woman & Queer",
+      "description": "Evento que vai reunir as comunidades Orgulho Tech, Devs 40+ e Elas Programam no Mês Internacional das Mulheres. Será no dia 19/3 (quinta), a partir das 19h, na Blip em São Paulo, com participação presencial e online. Este cadastro é para receber informações quando as inscrições abrirem e não garante vaga no meetup.",
+      "submitLabel": "Quero me inscrever",
+      "actionUrl": "https://script.google.com/macros/s/AKfycbxP70d6QcRpFntn3jahHyzqflk0ZTYYm-CyhWcF-TXfjzeRFFBzN6AGC2UiW66W0DoR/exec",
+      "method": "POST",
+      "firstNameFieldName": "firstName",
+      "lastNameFieldName": "lastName",
+      "emailFieldName": "email",
+      "whatsappFieldName": "whatsapp",
+      "openInNewTab": true
+    },
+    {
+      "__resolveType": "site/sections/MeetupRecap.tsx",
+      "eyebrow": "Como foi a última edição",
+      "title": "Meetup Orgulho Tech 2025 na FIAP",
+      "description": "No ano passado, durante a Semana da Parada SP, realizamos um encontro com o tema “Envelhecer LGBT+ na Tecnologia”, com painéis inspiradores, conexões reais e muita troca entre pessoas da comunidade.",
+      "highlights": [
+        "Tema central: Envelhecer LGBT+ na tecnologia",
+        "Encontro presencial na FIAP, em São Paulo",
+        "Debates, networking e fortalecimento da comunidade"
       ],
-      "description": "Participe do nosso grupo de Meetup para eventos recorrentes.",
-      "image": "https://assets.decocache.com/orgulho-tech/95a15f39-29e8-49e2-a699-c39ac99918ae/clean_528238105.jpeg"
+      "communitiesTitle": "8 comunidades reconhecidas",
+      "communitiesDescription": "Também premiamos 8 comunidades com o troféu “Você é um Orgulho Tech”, celebrando iniciativas que ampliam a diversidade e a inclusão na tecnologia.",
+      "ctaLabel": "Assistir como foi",
+      "ctaHref": "https://youtu.be/BbAVhm59g3g"
     },
     {
       "__resolveType": "Footer"
