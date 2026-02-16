@@ -1,10 +1,33 @@
 # Deploy do site Orgulho Tech (deco.cx)
 
-Este projeto pode ser publicado de graça de três formas:
+Este projeto pode ser publicado de graça de quatro formas:
 
 ---
 
-## 1. Deno Deploy (recomendado, gratuito)
+## 1. Vercel (build estático)
+
+Este repositório agora possui exportação estática automática para Vercel.
+
+1. Crie e publique uma branch de deploy (exemplo):
+
+```bash
+git checkout -b codex/vercel-static-export
+git add .
+git commit -m "chore: preparar deploy na vercel"
+git push -u origin codex/vercel-static-export
+```
+
+2. No painel da Vercel, importe o repositório e selecione a branch.
+3. A Vercel usará automaticamente o arquivo `vercel.json`:
+   - instala Deno;
+   - roda `deno task export:vercel`;
+   - publica a pasta `dist/`.
+
+Sempre que houver novo push na branch configurada, um novo deploy será gerado.
+
+---
+
+## 2. Deno Deploy (recomendado, gratuito)
 
 1. Acesse [deno.com/deploy](https://deno.com/deploy) e faça login (pode ser com GitHub).
 2. **Create Project** → **Import from GitHub** e selecione o repositório `orgulho-tech`.
@@ -19,7 +42,7 @@ Cada push na branch configurada (ex.: `main`) gera um novo deploy automaticament
 
 ---
 
-## 2. Docker (qualquer provedor)
+## 3. Docker (qualquer provedor)
 
 O `Dockerfile` na raiz segue a [documentação do deco.cx](https://docs.deco.cx/en/self-host/site).
 
@@ -36,7 +59,7 @@ Acesse `http://localhost:8000`.
 
 ---
 
-## 3. Deco.cx (se o site foi criado no deco.cx)
+## 4. Deco.cx (se o site foi criado no deco.cx)
 
 Se este repositório foi criado a partir de um site no deco.cx:
 

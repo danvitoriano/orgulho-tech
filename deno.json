@@ -30,7 +30,8 @@
     "cache_clean": "rm deno.lock; deno cache -r main.ts",
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
-    "dev": "deno run -A --env --unstable --unstable-hmr dev.ts"
+    "dev": "deno run -A --env --unstable --unstable-hmr dev.ts",
+    "export:vercel": "deno run -A scripts/export-vercel.ts"
   },
   "githooks": {
     "pre-commit": "check"
