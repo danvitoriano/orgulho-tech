@@ -22,12 +22,16 @@ const noopSpan = {
   setAttribute: () => {},
   setStatus: () => {},
   recordException: () => {},
+  updateName: () => {},
 };
 
 export const tracer = {
   startSpan: () => noopSpan,
-  startActiveSpan: (_name: string, _opts: unknown, fn: (span: typeof noopSpan) => void) => {
-    fn(noopSpan);
+  startActiveSpan: (...args: unknown[]) => {
+    const maybeFn = args[args.length - 1];
+    if (typeof maybeFn === "function") {
+      return (maybeFn as (span: typeof noopSpan) => unknown)(noopSpan);
+    }
     return noopSpan;
   },
 };
