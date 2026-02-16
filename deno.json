@@ -1,5 +1,6 @@
 {
   "imports": {
+    "https://deno.land/x/emoji@0.3.0/": "./patches/emoji/",
     "site/": "./",
     "deco/": "https://cdn.jsdelivr.net/gh/deco-cx/deco@1.83.3/",
     "apps/": "https://cdn.jsdelivr.net/gh/deco-cx/apps@0.53.9/",
