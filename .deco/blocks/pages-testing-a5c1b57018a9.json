@@ -6,8 +6,19 @@
       "__resolveType": "menu header"
     },
     {
+      "__resolveType": "site/sections/MeetupMainHero.tsx",
+      "title": "Meetup Woman & Queer",
+      "description": "No mês internacional das mulheres, vamos reunir as comunidades Orgulho Tech, Devs 40+ e Elas Programam em São Paulo, com participação presencial e online. Dia 19/3 (quinta), a partir das 19h. O local em São Paulo será divulgado em breve.",
+      "dateInfo": "19/3 (quinta), a partir das 19h",
+      "locationInfo": "Local em São Paulo será divulgado em breve + transmissão online",
+      "primaryCtaLabel": "Saiba mais e receba aviso",
+      "primaryCtaHref": "/meetup",
+      "imageSrc": "/women-queer-tech-hero.png"
+    },
+    {
       "__resolveType": "site/sections/Hero.tsx",
       "title": "<p><strong>Envelhecer LGBT+ na Tecnologia</strong></p><p></p>",
+      "titleSize": "heading",
       "cta": [
         {
           "href": "https://youtu.be/BbAVhm59g3g",

@@ -40,7 +40,9 @@ export default function MeetupSignupForm({
             <div class="flex flex-wrap gap-2 pt-2">
               <span class="badge badge-lg">19/3 (quinta)</span>
               <span class="badge badge-lg">A partir das 19h</span>
-              <span class="badge badge-lg">Blip, São Paulo</span>
+              <span class="badge badge-lg whitespace-normal h-auto py-2 text-center max-w-full">
+                Local em São Paulo em breve
+              </span>
               <span class="badge badge-lg">Presencial + Online</span>
               <span class="badge badge-lg">Mês Internacional das Mulheres</span>
             </div>
@@ -61,6 +63,12 @@ export default function MeetupSignupForm({
               class="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
               <input type="hidden" name="scriptUrl" value={actionUrl} />
+              <input type="hidden" name="source" value="meetup_pagina" />
+              <input
+                type="hidden"
+                name="successMessage"
+                value="Cadastro feito! Vamos te avisar quando as inscrições abrirem."
+              />
               <input type="hidden" name="method" value={method} />
               <input
                 type="hidden"

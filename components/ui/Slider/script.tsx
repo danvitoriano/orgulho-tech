@@ -84,6 +84,27 @@ const setup = ({ rootId, scroll, interval, infinite }: Props) => {
     return indices;
   };
 
+  const getNearestIndex = () => {
+    const sliderLeft = slider.scrollLeft;
+    let nearest = 0;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    for (let index = 0; index < items.length; index++) {
+      const item = items.item(index);
+
+      if (!isHTMLElement(item)) continue;
+
+      const distance = Math.abs(item.offsetLeft - root.offsetLeft - sliderLeft);
+
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearest = index;
+      }
+    }
+
+    return nearest;
+  };
+
   const goToItem = (index: number) => {
     const item = items.item(index);
 
@@ -105,7 +126,13 @@ const setup = ({ rootId, scroll, interval, infinite }: Props) => {
   const onClickPrev = () => {
     const indices = getElementsInsideContainer();
     // Wow! items per page is how many elements are being displayed inside the container!!
-    const itemsPerPage = indices.length;
+    const itemsPerPage = Math.max(1, indices.length);
+
+    if (indices.length === 0) {
+      const current = getNearestIndex();
+      goToItem(current === 0 ? items.length - 1 : current - 1);
+      return;
+    }
 
     const isShowingFirst = indices[0] === 0;
     const pageIndex = Math.floor(indices[indices.length - 1] / itemsPerPage);
@@ -118,7 +145,13 @@ const setup = ({ rootId, scroll, interval, infinite }: Props) => {
   const onClickNext = () => {
     const indices = getElementsInsideContainer();
     // Wow! items per page is how many elements are being displayed inside the container!!
-    const itemsPerPage = indices.length;
+    const itemsPerPage = Math.max(1, indices.length);
+
+    if (indices.length === 0) {
+      const current = getNearestIndex();
+      goToItem(current === items.length - 1 ? 0 : current + 1);
+      return;
+    }
 
     const isShowingLast = indices[indices.length - 1] === items.length - 1;
     const pageIndex = Math.floor(indices[0] / itemsPerPage);

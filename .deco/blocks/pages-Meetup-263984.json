@@ -8,7 +8,7 @@
     {
       "__resolveType": "site/sections/MeetupSignupForm.tsx",
       "title": "Meetup Woman & Queer",
-      "description": "Evento que vai reunir as comunidades Orgulho Tech, Devs 40+ e Elas Programam no Mês Internacional das Mulheres. Será no dia 19/3 (quinta), a partir das 19h, na Blip em São Paulo, com participação presencial e online. Este cadastro é para receber informações quando as inscrições abrirem e não garante vaga no meetup.",
+      "description": "Evento que vai reunir as comunidades Orgulho Tech, Devs 40+ e Elas Programam no Mês Internacional das Mulheres. Será no dia 19/3 (quinta), a partir das 19h, com participação presencial e online. O local em São Paulo será divulgado em breve. Este cadastro é para receber informações quando as inscrições abrirem e não garante vaga no meetup.",
       "submitLabel": "Quero me inscrever",
       "actionUrl": "https://script.google.com/macros/s/AKfycbxP70d6QcRpFntn3jahHyzqflk0ZTYYm-CyhWcF-TXfjzeRFFBzN6AGC2UiW66W0DoR/exec",
       "method": "POST",

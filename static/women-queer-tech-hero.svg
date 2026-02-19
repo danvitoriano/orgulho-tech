@@ -1,0 +1,119 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="130" y1="80" x2="1510" y2="930" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5A2DAA"/>
+      <stop offset="0.55" stop-color="#7A3EC8"/>
+      <stop offset="1" stop-color="#2E1F73"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 400) rotate(90) scale(320 460)">
+      <stop stop-color="#FFC56A"/>
+      <stop offset="1" stop-color="#FF8A5B"/>
+    </radialGradient>
+    <linearGradient id="wave1" x1="120" y1="870" x2="1480" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="1" stop-color="#EC4899"/>
+    </linearGradient>
+    <linearGradient id="wave2" x1="80" y1="910" x2="1520" y2="940" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="skinA" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#8C4F3A"/>
+      <stop offset="1" stop-color="#6E3A2E"/>
+    </linearGradient>
+    <linearGradient id="skinB" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#E2A37E"/>
+      <stop offset="1" stop-color="#C78062"/>
+    </linearGradient>
+    <linearGradient id="skinC" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F0C9A4"/>
+      <stop offset="1" stop-color="#D8AA87"/>
+    </linearGradient>
+    <linearGradient id="skinD" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#B06B4F"/>
+      <stop offset="1" stop-color="#8C4D3B"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <circle cx="800" cy="400" r="300" fill="url(#sun)" opacity="0.92"/>
+
+  <g opacity="0.2" stroke="#FFFFFF" stroke-width="5">
+    <path d="M90 240C240 160 360 190 470 250"/>
+    <path d="M310 190L390 230L455 210"/>
+    <path d="M1290 205C1200 170 1110 170 990 245"/>
+    <path d="M1120 250L1185 220L1260 235"/>
+    <path d="M210 560H340L390 600"/>
+    <path d="M1260 560H1120L1060 610"/>
+  </g>
+
+  <g>
+    <ellipse cx="310" cy="610" rx="120" ry="140" fill="#24124E"/>
+    <circle cx="310" cy="490" r="72" fill="url(#skinA)"/>
+    <path d="M248 460C255 410 290 388 334 398C371 408 389 441 382 478C373 430 343 430 313 430C281 430 257 440 248 460Z" fill="#1C113D"/>
+    <rect x="230" y="552" width="160" height="205" rx="65" fill="#F97316"/>
+    <circle cx="274" cy="500" r="5" fill="#201A2D"/>
+    <circle cx="343" cy="500" r="5" fill="#201A2D"/>
+    <path d="M278 530C298 548 324 548 344 530" stroke="#201A2D" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <ellipse cx="500" cy="610" rx="114" ry="136" fill="#29135A"/>
+    <circle cx="500" cy="495" r="68" fill="url(#skinB)"/>
+    <path d="M442 470C454 430 487 412 530 422C560 430 576 452 575 485C548 455 521 446 492 450C470 454 452 460 442 470Z" fill="#5B2DB0"/>
+    <rect x="424" y="553" width="152" height="196" rx="62" fill="#C4B5FD"/>
+    <circle cx="475" cy="503" r="5" fill="#211A2C"/>
+    <circle cx="528" cy="503" r="5" fill="#211A2C"/>
+    <path d="M480 530C495 543 510 543 525 530" stroke="#211A2C" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <ellipse cx="670" cy="600" rx="118" ry="138" fill="#2D165E"/>
+    <circle cx="670" cy="482" r="70" fill="url(#skinC)"/>
+    <path d="M607 466C620 425 657 409 699 420C725 428 739 454 732 487C710 450 680 438 653 440C634 441 617 450 607 466Z" fill="#FDE68A"/>
+    <rect x="595" y="540" width="150" height="210" rx="64" fill="#0F766E"/>
+    <circle cx="645" cy="492" r="5" fill="#20192B"/>
+    <circle cx="697" cy="492" r="5" fill="#20192B"/>
+    <path d="M648 521C664 536 679 536 695 521" stroke="#20192B" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <ellipse cx="860" cy="600" rx="122" ry="142" fill="#23124E"/>
+    <circle cx="860" cy="474" r="72" fill="url(#skinD)"/>
+    <path d="M795 458C813 414 847 401 891 414C918 423 931 450 924 481C900 443 870 430 842 434C823 438 806 446 795 458Z" fill="#2A1A4F"/>
+    <rect x="785" y="532" width="154" height="218" rx="66" fill="#4C1D95"/>
+    <circle cx="834" cy="484" r="5" fill="#1E1828"/>
+    <circle cx="887" cy="484" r="5" fill="#1E1828"/>
+    <path d="M838 515C854 531 871 531 887 515" stroke="#1E1828" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <ellipse cx="1035" cy="615" rx="114" ry="134" fill="#281756"/>
+    <circle cx="1035" cy="495" r="68" fill="url(#skinB)"/>
+    <path d="M975 472C990 438 1020 422 1058 429C1083 434 1099 453 1100 482C1078 452 1049 444 1022 447C1002 450 986 458 975 472Z" fill="#EC4899"/>
+    <rect x="962" y="556" width="146" height="195" rx="62" fill="#111827"/>
+    <circle cx="1012" cy="503" r="5" fill="#1F182A"/>
+    <circle cx="1060" cy="503" r="5" fill="#1F182A"/>
+    <path d="M1016 530C1030 543 1045 543 1058 530" stroke="#1F182A" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <ellipse cx="1230" cy="615" rx="118" ry="138" fill="#2B155B"/>
+    <circle cx="1230" cy="495" r="70" fill="url(#skinC)"/>
+    <path d="M1168 470C1186 432 1218 418 1260 426C1287 434 1303 454 1305 485C1280 452 1250 443 1223 446C1201 449 1180 456 1168 470Z" fill="#D1D5DB"/>
+    <rect x="1153" y="557" width="154" height="196" rx="64" fill="#C4B5FD"/>
+    <circle cx="1206" cy="503" r="5" fill="#1F182A"/>
+    <circle cx="1255" cy="503" r="5" fill="#1F182A"/>
+    <path d="M1209 530C1225 544 1239 544 1254 530" stroke="#1F182A" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <path d="M20 860C180 820 320 880 500 850C700 815 830 905 1030 870C1230 834 1370 900 1580 850V1000H20V860Z" fill="url(#wave1)" opacity="0.9"/>
+  <path d="M0 900C190 870 350 930 540 900C730 870 890 955 1100 920C1300 885 1450 960 1600 930V1000H0V900Z" fill="url(#wave2)" opacity="0.88"/>
+
+  <g fill="#FDE68A" opacity="0.85">
+    <circle cx="158" cy="164" r="8"/>
+    <circle cx="1420" cy="172" r="8"/>
+    <circle cx="1330" cy="780" r="8"/>
+    <circle cx="250" cy="742" r="8"/>
+  </g>
+</svg>

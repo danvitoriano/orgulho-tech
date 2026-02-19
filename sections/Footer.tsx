@@ -85,13 +85,8 @@ export default function Footer({
     instructions:
       "By subscribing you agree to with our <a href='/' target='_blank' class='link'>Privacy Policy</a> and provide consent to receive updates from our company.",
   },
-  madeWith = {
-    label: "Made with",
-    src:
-      "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/1527/cc202be0-af57-4b32-b9c9-d1d7dc97bf85",
-    href: "https://deco.cx",
-  },
-  copyright = "© 2026 deco.cx. All rights reserved.",
+  madeWith,
+  copyright = "© 2026 Orgulho Tech. Todos os direitos reservados.",
   bottomLinks = [
     { label: "Privacy Policy", href: "/" },
     { label: "Terms of Service", href: "/" },
@@ -104,6 +99,7 @@ export default function Footer({
     { network: "Youtube", href: "https://youtube.com/playlist?list=PLndJnupfcnxFNZv1pt7Umj6UUUKcPxfHk&si=fGMpxoascUfFKVkb" },
   ],
 }: Props) {
+  const showMadeWith = Boolean(madeWith?.label || madeWith?.src);
 
   return (
     <div class="lg:container mx-auto md:max-w-6xl px-4 pt-16 text-sm">
@@ -136,13 +132,35 @@ export default function Footer({
             <h4 class="font-semibold mb-4">{subscribe?.title}</h4>
             <p class="font-normal">{subscribe.description}</p>
             <div class="flex gap-4">
-            <form id="newsletter-form" hx-post="https://express-sigma-seven.vercel.app/email" hx-include="#Value1" hx-trigger="submit" hx-swap="outerHTML">
+            <form
+              id="newsletter-form"
+              hx-post="/api/meetup-signup"
+              hx-swap="innerHTML"
+              hx-target="#newsletter-feedback"
+            >
               <input
-                type="text"
-                name="Value1"
+                type="hidden"
+                name="scriptUrl"
+                value="https://script.google.com/macros/s/AKfycbxP70d6QcRpFntn3jahHyzqflk0ZTYYm-CyhWcF-TXfjzeRFFBzN6AGC2UiW66W0DoR/exec"
+              />
+              <input type="hidden" name="source" value="newsletter_rodape" />
+              <input
+                type="hidden"
+                name="successMessage"
+                value="E-mail cadastrado com sucesso na newsletter."
+              />
+              <input
+                type="hidden"
+                name="errorMessage"
+                value="Não foi possível cadastrar seu e-mail agora. Tente novamente."
+              />
+              <input
+                type="email"
+                name="email"
                 id="Value1"
-                placeholder="Enter your email"
+                placeholder="Digite seu e-mail"
                 class="w-full input input-bordered input-primary"
+                required
               />
               <button
                 class="btn btn-outline font-normal"
@@ -150,6 +168,7 @@ export default function Footer({
               >
                 Receba nossa newsletter
               </button>
+              <div id="newsletter-feedback" class="mt-2"></div>
               </form>
             </div>
             <p
@@ -161,19 +180,21 @@ export default function Footer({
         </div>
         <div class="border-primary border-t flex flex-col gap-4 items-center justify-between lg:flex-row lg:items-center py-8">
           <div class="flex flex-col gap-4 items-center lg:flex-row lg:gap-6">
-            <a
-              href={madeWith?.href}
-              class="flex items-center gap-2"
-              target="_blank"
-            >
-              <span>{madeWith?.label}</span>
-              <Image
-                src={madeWith?.src || ""}
-                width={100}
-                height={28}
-                alt={madeWith?.label}
-              />
-            </a>
+            {showMadeWith && (
+              <a
+                href={madeWith?.href}
+                class="flex items-center gap-2"
+                target="_blank"
+              >
+                <span>{madeWith?.label}</span>
+                <Image
+                  src={madeWith?.src || ""}
+                  width={100}
+                  height={28}
+                  alt={madeWith?.label}
+                />
+              </a>
+            )}
             <span>{copyright}</span>
             <div class="flex gap-2 justify-between lg:gap-6">
               {bottomLinks?.map((item) => (

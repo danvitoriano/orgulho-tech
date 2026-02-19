@@ -21,6 +21,7 @@ export interface Props {
   image?: ImageWidget;
   placement?: "left" | "right";
   cta?: CTA[];
+  titleSize?: "display" | "heading";
 }
 
 const PLACEMENT = {
@@ -34,11 +35,17 @@ export default function HeroFlats({
     "This text is fully editable and ready for your personal touch. Just click here, head over to the section window, or dive straight into the code to make changes as you see fit. Whether it's about the content, formatting, font, or anything in between, editing is just a click away.",
   image,
   placement = "left",
+  titleSize = "display",
   cta = [
     { id: "change-me-1", href: "/", text: "Change me", outline: false },
     { id: "change-me-2", href: "/", text: "Change me", outline: true },
   ],
 }: Props) {
+  const TITLE_SIZE = {
+    display: "lg:text-[80px] text-4xl",
+    heading: "lg:text-5xl text-3xl",
+  } as const;
+
   return (
     <nav class="lg:container lg:mx-auto mx-4">
       <div class="flex flex-col items-center gap-8">
@@ -68,7 +75,7 @@ export default function HeroFlats({
             }`}
           >
             <div
-              class="inline-block lg:text-[80px] text-4xl leading-none font-medium"
+              class={`inline-block ${TITLE_SIZE[titleSize]} leading-none font-medium`}
               dangerouslySetInnerHTML={{
                 __html: title,
               }}

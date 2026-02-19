@@ -4,6 +4,7 @@
 
 import * as $_app from "./routes/_app.tsx";
 import * as $api_meetup_signup from "./routes/api/meetup-signup.ts";
+import * as $women_queer_tech_hero_png from "./routes/women-queer-tech-hero.png.ts";
 
 import { type Manifest } from "$fresh/server.ts";
 
@@ -11,6 +12,7 @@ const manifest = {
   routes: {
     "./routes/_app.tsx": $_app,
     "./routes/api/meetup-signup.ts": $api_meetup_signup,
+    "./routes/women-queer-tech-hero.png.ts": $women_queer_tech_hero_png,
   },
   islands: {},
   baseUrl: import.meta.url,

@@ -1,0 +1,48 @@
+<svg width="1600" height="1000" viewBox="0 0 1600 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="93" y1="64" x2="1446" y2="951" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D2A59"/>
+      <stop offset="0.55" stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(420 300) rotate(44) scale(500 420)">
+      <stop stop-color="#FFD166" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#FFD166" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1220 640) rotate(44) scale(580 460)">
+      <stop stop-color="#FB7185" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#FB7185" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" stroke="white" stroke-opacity="0.12"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <rect width="1600" height="1000" fill="url(#grid)"/>
+  <rect width="1600" height="1000" fill="url(#glowA)"/>
+  <rect width="1600" height="1000" fill="url(#glowB)"/>
+
+  <circle cx="1320" cy="210" r="130" fill="#FDE68A" fill-opacity="0.24"/>
+  <circle cx="250" cy="800" r="180" fill="#67E8F9" fill-opacity="0.24"/>
+  <circle cx="1160" cy="820" r="74" fill="#FDBA74" fill-opacity="0.48"/>
+
+  <rect x="120" y="140" width="620" height="610" rx="42" fill="white" fill-opacity="0.12" stroke="white" stroke-opacity="0.32"/>
+  <rect x="860" y="280" width="600" height="540" rx="42" fill="black" fill-opacity="0.16" stroke="white" stroke-opacity="0.22"/>
+
+  <text x="180" y="255" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="700">WOMAN &amp; QUEER</text>
+  <text x="180" y="320" fill="white" font-family="Arial, sans-serif" font-size="48" font-weight="700">TECH MEETUP</text>
+  <text x="180" y="390" fill="#FDE68A" font-family="Arial, sans-serif" font-size="28" font-weight="600">ORGULHO TECH  DEVs 40+  ELAS PROGRAMAM</text>
+
+  <text x="180" y="500" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="600">19/3  THURSDAY  FROM 19:00</text>
+  <text x="180" y="552" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="600">BLIP SAO PAULO  ONSITE + ONLINE</text>
+
+  <rect x="940" y="360" width="440" height="86" rx="20" fill="white" fill-opacity="0.16"/>
+  <text x="972" y="414" fill="white" font-family="Arial, sans-serif" font-size="30" font-weight="700">MARCH SPECIAL EDITION</text>
+
+  <rect x="940" y="488" width="440" height="86" rx="20" fill="white" fill-opacity="0.16"/>
+  <text x="972" y="542" fill="white" font-family="Arial, sans-serif" font-size="30" font-weight="700">WOMEN'S MONTH</text>
+
+  <rect x="940" y="616" width="440" height="86" rx="20" fill="white" fill-opacity="0.16"/>
+  <text x="972" y="670" fill="white" font-family="Arial, sans-serif" font-size="30" font-weight="700">REGISTER TO GET ALERT</text>
+</svg>

@@ -1,9 +1,19 @@
 import { Handlers } from "$fresh/server.ts";
 
-const SUCCESS_HTML =
-  `<div class="alert alert-success mt-2"><span>Cadastro realizado com sucesso.</span></div>`;
-const ERROR_HTML =
-  `<div class="alert alert-error mt-2"><span>Não foi possível enviar seu cadastro. Tente novamente.</span></div>`;
+const DEFAULT_SUCCESS_MESSAGE = "Cadastro realizado com sucesso.";
+const DEFAULT_ERROR_MESSAGE =
+  "Não foi possível enviar seu cadastro. Tente novamente.";
+
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
+const renderAlert = (type: "success" | "error", message: string) =>
+  `<div class="alert alert-${type} mt-2"><span>${escapeHtml(message)}</span></div>`;
 
 export const handler: Handlers = {
   async POST(req) {
@@ -13,11 +23,22 @@ export const handler: Handlers = {
       const scriptUrl = String(formData.get("scriptUrl") ?? "");
       const firstName = String(formData.get("firstName") ?? "").trim();
       const lastName = String(formData.get("lastName") ?? "").trim();
-      const email = String(formData.get("email") ?? "").trim();
+      const email = String(formData.get("email") ?? formData.get("Value1") ?? "")
+        .trim();
       const whatsapp = String(formData.get("whatsapp") ?? "").trim();
+      const source = String(formData.get("source") ?? "site").trim();
+      const successMessage = String(
+        formData.get("successMessage") ?? DEFAULT_SUCCESS_MESSAGE,
+      ).trim();
+      const errorMessage = String(
+        formData.get("errorMessage") ?? DEFAULT_ERROR_MESSAGE,
+      ).trim();
 
-      if (!scriptUrl || !firstName || !lastName || !email || !whatsapp) {
-        return new Response(ERROR_HTML, {
+      const successHtml = renderAlert("success", successMessage);
+      const errorHtml = renderAlert("error", errorMessage);
+
+      if (!scriptUrl || !email) {
+        return new Response(errorHtml, {
           status: 400,
           headers: { "content-type": "text/html; charset=utf-8" },
         });
@@ -28,6 +49,7 @@ export const handler: Handlers = {
         lastName,
         email,
         whatsapp,
+        source,
       });
 
       const upstream = await fetch(scriptUrl, {
@@ -39,18 +61,18 @@ export const handler: Handlers = {
       });
 
       if (!upstream.ok) {
-        return new Response(ERROR_HTML, {
+        return new Response(errorHtml, {
           status: 502,
           headers: { "content-type": "text/html; charset=utf-8" },
         });
       }
 
-      return new Response(SUCCESS_HTML, {
+      return new Response(successHtml, {
         status: 200,
         headers: { "content-type": "text/html; charset=utf-8" },
       });
     } catch {
-      return new Response(ERROR_HTML, {
+      return new Response(renderAlert("error", DEFAULT_ERROR_MESSAGE), {
         status: 500,
         headers: { "content-type": "text/html; charset=utf-8" },
       });
