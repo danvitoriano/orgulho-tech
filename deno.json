@@ -31,7 +31,10 @@
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
     "dev": "deno run -A --env --unstable --unstable-hmr dev.ts",
-    "export:vercel": "deno run -A scripts/export-vercel.ts"
+    "export:vercel": "deno run -A scripts/export-vercel.ts",
+    "test:meetup": "deno test --allow-read sections/MeetupSignupForm.test.ts",
+    "test:e2e:meetup": "deno test -A tests/meetup-signup.e2e.test.ts",
+    "test:predeploy": "deno task test:meetup && deno task test:e2e:meetup"
   },
   "githooks": {
     "pre-commit": "check"
