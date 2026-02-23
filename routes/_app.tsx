@@ -24,6 +24,17 @@ export default defineApp(async (_req, ctx) => {
 
         {/* Web Manifest */}
         <link rel="manifest" href={asset("/site.webmanifest")} />
+
+        {/* Vercel Web Analytics */}
+        <script
+          // deno-lint-ignore react-no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+            `,
+          }}
+        />
+        <script defer src="/_vercel/insights/script.js" />
       </Head>
 
       {/* Rest of Preact tree */}
