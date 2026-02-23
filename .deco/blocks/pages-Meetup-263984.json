@@ -3,9 +3,6 @@
   "path": "/meetup",
   "sections": [
     {
-      "__resolveType": "site/sections/MeetupSEO.tsx"
-    },
-    {
       "__resolveType": "menu header"
     },
     {
@@ -41,13 +38,7 @@
     }
   ],
   "seo": {
-    "__resolveType": "website/sections/Seo/SeoV2.tsx",
-    "type": "website",
-    "title": "Meetup Woman & Queer | Orgulho Tech",
-    "description": "Evento que reune as comunidades Orgulho Tech, Devs 40+ e Elas Programam no dia 19/03, as 19h, com participacao presencial e online.",
-    "titleTemplate": "%s",
-    "descriptionTemplate": "%s",
-    "image": "https://www.orgulhotech.com.br/women-queer-tech-hero.png"
+    "__resolveType": "site/sections/MeetupSEO.tsx"
   },
   "__resolveType": "website/pages/Page.tsx"
 }
