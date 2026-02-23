@@ -33,9 +33,11 @@
     "dev": "deno run -A --env --unstable --unstable-hmr dev.ts",
     "export:vercel": "deno run -A scripts/export-vercel.ts",
     "test:meetup": "deno test --allow-read sections/MeetupSignupForm.test.ts",
+    "test:newsletter": "deno test --allow-read sections/FooterNewsletter.test.ts",
     "test:e2e:meetup": "deno test -A tests/meetup-signup.e2e.test.ts",
     "test:meetup:integration": "deno test -A tests/meetup-signup.integration.test.ts",
-    "test:predeploy": "deno task test:meetup && deno task test:meetup:integration"
+    "test:newsletter:integration": "deno test -A tests/newsletter-signup.integration.test.ts",
+    "test:predeploy": "deno task test:meetup && deno task test:newsletter && deno task test:meetup:integration && deno task test:newsletter:integration"
   },
   "githooks": {
     "pre-commit": "check"

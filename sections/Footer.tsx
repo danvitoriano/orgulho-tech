@@ -96,10 +96,16 @@ export default function Footer({
     { network: "Facebook", href: "" },
     { network: "Instagram", href: "" },
     { network: "Linkedin", href: "" },
-    { network: "Youtube", href: "https://youtube.com/playlist?list=PLndJnupfcnxFNZv1pt7Umj6UUUKcPxfHk&si=fGMpxoascUfFKVkb" },
+    {
+      network: "Youtube",
+      href:
+        "https://youtube.com/playlist?list=PLndJnupfcnxFNZv1pt7Umj6UUUKcPxfHk&si=fGMpxoascUfFKVkb",
+    },
   ],
 }: Props) {
   const showMadeWith = Boolean(madeWith?.label || madeWith?.src);
+  const newsletterScriptUrl =
+    "https://script.google.com/macros/s/AKfycbxP70d6QcRpFntn3jahHyzqflk0ZTYYm-CyhWcF-TXfjzeRFFBzN6AGC2UiW66W0DoR/exec";
 
   return (
     <div class="lg:container mx-auto md:max-w-6xl px-4 pt-16 text-sm">
@@ -132,45 +138,91 @@ export default function Footer({
             <h4 class="font-semibold mb-4">{subscribe?.title}</h4>
             <p class="font-normal">{subscribe.description}</p>
             <div class="flex gap-4">
-            <form
-              id="newsletter-form"
-              hx-post="/api/meetup-signup"
-              hx-swap="innerHTML"
-              hx-target="#newsletter-feedback"
-            >
-              <input
-                type="hidden"
-                name="scriptUrl"
-                value="https://script.google.com/macros/s/AKfycbxP70d6QcRpFntn3jahHyzqflk0ZTYYm-CyhWcF-TXfjzeRFFBzN6AGC2UiW66W0DoR/exec"
+              <iframe
+                name="newsletter-signup-target"
+                id="newsletter-signup-target"
+                title="Envio newsletter"
+                class="hidden"
               />
-              <input type="hidden" name="source" value="newsletter_rodape" />
-              <input
-                type="hidden"
-                name="successMessage"
-                value="E-mail cadastrado com sucesso na newsletter."
-              />
-              <input
-                type="hidden"
-                name="errorMessage"
-                value="Não foi possível cadastrar seu e-mail agora. Tente novamente."
-              />
-              <input
-                type="email"
-                name="email"
-                id="Value1"
-                placeholder="Digite seu e-mail"
-                class="w-full input input-bordered input-primary"
-                required
-              />
-              <button
-                class="btn btn-outline font-normal"
-                aria-label="Subscribe"
+              <form
+                id="newsletter-form-element"
+                action={newsletterScriptUrl}
+                method="POST"
+                target="newsletter-signup-target"
               >
-                Receba nossa newsletter
-              </button>
-              <div id="newsletter-feedback" class="mt-2"></div>
+                <input type="hidden" name="source" value="newsletter_rodape" />
+                <input
+                  type="email"
+                  name="email"
+                  id="newsletter-email"
+                  placeholder="Digite seu e-mail"
+                  class="w-full input input-bordered input-primary"
+                  required
+                />
+                <button
+                  id="newsletter-submit-button"
+                  class="btn btn-outline font-normal"
+                  aria-label="Subscribe"
+                >
+                  Receba nossa newsletter
+                </button>
+                <div id="newsletter-feedback" class="mt-2"></div>
               </form>
             </div>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(() => {
+  const form = document.getElementById("newsletter-form-element");
+  const iframe = document.getElementById("newsletter-signup-target");
+  const feedback = document.getElementById("newsletter-feedback");
+  const submitButton = document.getElementById("newsletter-submit-button");
+  if (
+    !(form instanceof HTMLFormElement) ||
+    !(iframe instanceof HTMLIFrameElement) ||
+    !(feedback instanceof HTMLElement) ||
+    !(submitButton instanceof HTMLButtonElement)
+  ) return;
+
+  let isSubmitting = false;
+  let timeoutId = null;
+
+  const setMessage = (type, message) => {
+    feedback.innerHTML = '<div class="alert alert-' + type + ' mt-2"><span>' + message + '</span></div>';
+  };
+
+  form.addEventListener("submit", (event) => {
+    if (isSubmitting) {
+      event.preventDefault();
+      return;
+    }
+
+    isSubmitting = true;
+    submitButton.disabled = true;
+    setMessage("info", "Enviando cadastro...");
+
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      if (!isSubmitting) return;
+      isSubmitting = false;
+      submitButton.disabled = false;
+      setMessage("error", "Não foi possível cadastrar seu e-mail agora. Tente novamente.");
+    }, 15000);
+  });
+
+  iframe.addEventListener("load", () => {
+    if (!isSubmitting) return;
+    isSubmitting = false;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    submitButton.disabled = false;
+    form.reset();
+    setMessage("success", "E-mail cadastrado com sucesso na newsletter.");
+  });
+})();`,
+              }}
+            />
             <p
               class="text-xs"
               dangerouslySetInnerHTML={{ __html: subscribe.instructions }}
