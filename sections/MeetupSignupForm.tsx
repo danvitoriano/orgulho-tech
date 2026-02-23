@@ -54,7 +54,8 @@ export default function MeetupSignupForm({
             <div class="space-y-1 mb-5">
               <h2 class="text-2xl font-semibold">Inscrição</h2>
               <p class="text-sm opacity-80">
-                Preencha seus dados para receber informações quando as inscrições abrirem.
+                Preencha seus dados para receber informações quando as
+                inscrições abrirem.
               </p>
             </div>
 
@@ -111,6 +112,7 @@ export default function MeetupSignupForm({
                 <span class="label-text mb-1">WhatsApp</span>
                 <input
                   type="tel"
+                  id="meetup-whatsapp-input"
                   name={whatsappFieldName}
                   required
                   class="input input-bordered w-full"
@@ -136,15 +138,15 @@ export default function MeetupSignupForm({
                   )}
                 </div>
                 <p class="text-xs opacity-80 mt-2">
-                  Este cadastro não garante vaga no meetup. Ele serve para avisar quando as inscrições forem abertas.
+                  Este cadastro não garante vaga no meetup. Ele serve para
+                  avisar quando as inscrições forem abertas.
                 </p>
               </div>
             </form>
             {useBackgroundSubmit && (
               <script
                 dangerouslySetInnerHTML={{
-                  __html:
-                    `(() => {
+                  __html: `(() => {
   const form = document.getElementById("meetup-signup-form-element");
   const iframe = document.getElementById("meetup-signup-target");
   const submitButton = document.getElementById("meetup-signup-submit-button");
@@ -159,6 +161,7 @@ export default function MeetupSignupForm({
   let isSubmitting = false;
   let submitTimeoutId = null;
   let restoreTimeoutId = null;
+  const whatsappInput = document.getElementById("meetup-whatsapp-input");
 
   const showButton = () => {
     submitButton.classList.remove("hidden");
@@ -172,6 +175,19 @@ export default function MeetupSignupForm({
     status.classList.remove("hidden");
     status.innerHTML = '<div class="alert alert-' + type + '"><span>' + message + '</span></div>';
   };
+
+  const formatWhatsapp = (rawValue) => {
+    const digits = rawValue.replace(/\D/g, "").slice(0, 11);
+    if (digits.length <= 2) return digits.length ? '(' + digits : '';
+    if (digits.length <= 7) return '(' + digits.slice(0, 2) + ') ' + digits.slice(2);
+    return '(' + digits.slice(0, 2) + ') ' + digits.slice(2, 7) + '-' + digits.slice(7);
+  };
+
+  if (whatsappInput instanceof HTMLInputElement) {
+    whatsappInput.addEventListener("input", () => {
+      whatsappInput.value = formatWhatsapp(whatsappInput.value);
+    });
+  }
 
   form.addEventListener("submit", (event) => {
     if (isSubmitting) {

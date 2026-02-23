@@ -32,13 +32,28 @@ Deno.test("Footer newsletter uses background submit directly to Google Script", 
   );
   assertIncludes(
     source,
-    `id="newsletter-feedback"`,
-    "newsletter feedback container",
+    `id="newsletter-submit-button"`,
+    "newsletter submit button",
   );
   assertIncludes(
     source,
-    `setMessage("success", "E-mail cadastrado com sucesso na newsletter.")`,
+    `id="newsletter-status"`,
+    "newsletter status container",
+  );
+  assertIncludes(
+    source,
+    `showStatus("info", "Enviando cadastro...")`,
+    "newsletter sending status message",
+  );
+  assertIncludes(
+    source,
+    `showStatus("success", "E-mail cadastrado com sucesso na newsletter.")`,
     "newsletter success message",
+  );
+  assertIncludes(
+    source,
+    `setTimeout(showButton, 5000)`,
+    "newsletter button restore timeout",
   );
   assert(
     !source.includes(`hx-post="/api/meetup-signup"`),

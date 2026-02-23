@@ -166,7 +166,11 @@ export default function Footer({
                 >
                   Receba nossa newsletter
                 </button>
-                <div id="newsletter-feedback" class="mt-2"></div>
+                <div
+                  id="newsletter-status"
+                  class="hidden mt-2"
+                  aria-live="polite"
+                />
               </form>
             </div>
             <script
@@ -174,20 +178,30 @@ export default function Footer({
                 __html: `(() => {
   const form = document.getElementById("newsletter-form-element");
   const iframe = document.getElementById("newsletter-signup-target");
-  const feedback = document.getElementById("newsletter-feedback");
+  const status = document.getElementById("newsletter-status");
   const submitButton = document.getElementById("newsletter-submit-button");
   if (
     !(form instanceof HTMLFormElement) ||
     !(iframe instanceof HTMLIFrameElement) ||
-    !(feedback instanceof HTMLElement) ||
+    !(status instanceof HTMLElement) ||
     !(submitButton instanceof HTMLButtonElement)
   ) return;
 
   let isSubmitting = false;
-  let timeoutId = null;
+  let submitTimeoutId = null;
+  let restoreTimeoutId = null;
 
-  const setMessage = (type, message) => {
-    feedback.innerHTML = '<div class="alert alert-' + type + ' mt-2"><span>' + message + '</span></div>';
+  const showButton = () => {
+    submitButton.classList.remove("hidden");
+    submitButton.disabled = false;
+    status.classList.add("hidden");
+    status.innerHTML = "";
+  };
+
+  const showStatus = (type, message) => {
+    submitButton.classList.add("hidden");
+    status.classList.remove("hidden");
+    status.innerHTML = '<div class="alert alert-' + type + '"><span>' + message + '</span></div>';
   };
 
   form.addEventListener("submit", (event) => {
@@ -197,28 +211,28 @@ export default function Footer({
     }
 
     isSubmitting = true;
-    submitButton.disabled = true;
-    setMessage("info", "Enviando cadastro...");
+    showStatus("info", "Enviando cadastro...");
 
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
+    if (submitTimeoutId) clearTimeout(submitTimeoutId);
+    if (restoreTimeoutId) clearTimeout(restoreTimeoutId);
+    submitTimeoutId = setTimeout(() => {
       if (!isSubmitting) return;
       isSubmitting = false;
-      submitButton.disabled = false;
-      setMessage("error", "Não foi possível cadastrar seu e-mail agora. Tente novamente.");
+      showStatus("error", "Não foi possível cadastrar seu e-mail agora. Tente novamente.");
+      restoreTimeoutId = setTimeout(showButton, 5000);
     }, 15000);
   });
 
   iframe.addEventListener("load", () => {
     if (!isSubmitting) return;
     isSubmitting = false;
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
+    if (submitTimeoutId) {
+      clearTimeout(submitTimeoutId);
+      submitTimeoutId = null;
     }
-    submitButton.disabled = false;
     form.reset();
-    setMessage("success", "E-mail cadastrado com sucesso na newsletter.");
+    showStatus("success", "E-mail cadastrado com sucesso na newsletter.");
+    restoreTimeoutId = setTimeout(showButton, 5000);
   });
 })();`,
               }}

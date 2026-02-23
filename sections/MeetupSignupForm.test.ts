@@ -32,6 +32,11 @@ Deno.test("MeetupSignupForm keeps inline background submit behavior", async () =
   );
   assertIncludes(
     source,
+    `id="meetup-whatsapp-input"`,
+    "whatsapp input id",
+  );
+  assertIncludes(
+    source,
     `id="meetup-signup-submit-button"`,
     "submit button id",
   );
@@ -55,6 +60,11 @@ Deno.test("MeetupSignupForm keeps inline background submit behavior", async () =
     `setTimeout(showButton, 5000)`,
     "button restore timeout",
   );
+  assertIncludes(
+    source,
+    `const formatWhatsapp = (rawValue) =>`,
+    "whatsapp mask formatter",
+  );
 });
 
 Deno.test("Meetup page block pins openInNewTab=false and actionUrl", async () => {
@@ -67,7 +77,10 @@ Deno.test("Meetup page block pins openInNewTab=false and actionUrl", async () =>
     section.__resolveType === "site/sections/MeetupSignupForm.tsx"
   );
 
-  assert(signupSection, "MeetupSignupForm section should exist on /meetup page");
+  assert(
+    signupSection,
+    "MeetupSignupForm section should exist on /meetup page",
+  );
   assert(signupSection.openInNewTab === false, "openInNewTab must be false");
   assert(
     signupSection.actionUrl ===
