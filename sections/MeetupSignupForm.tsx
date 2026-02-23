@@ -24,6 +24,8 @@ export default function MeetupSignupForm({
   whatsappFieldName = "whatsapp",
   openInNewTab = true,
 }: Props) {
+  const useBackgroundSubmit = !openInNewTab;
+
   return (
     <section
       id="meetup-signup-form"
@@ -56,10 +58,19 @@ export default function MeetupSignupForm({
               </p>
             </div>
 
+            {useBackgroundSubmit && (
+              <iframe
+                name="meetup-signup-target"
+                id="meetup-signup-target"
+                class="hidden"
+                title="Envio de inscricao meetup"
+              />
+            )}
             <form
+              id="meetup-signup-form"
               action={actionUrl}
               method={method}
-              target={openInNewTab ? "_blank" : "_self"}
+              target={useBackgroundSubmit ? "meetup-signup-target" : "_blank"}
               class="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
               <input type="hidden" name="source" value="meetup_pagina" />
@@ -115,7 +126,57 @@ export default function MeetupSignupForm({
                   Este cadastro não garante vaga no meetup. Ele serve para avisar quando as inscrições forem abertas.
                 </p>
               </div>
+              {useBackgroundSubmit && (
+                <div
+                  id="meetup-signup-feedback"
+                  class="md:col-span-2 text-sm"
+                  aria-live="polite"
+                />
+              )}
             </form>
+            {useBackgroundSubmit && (
+              <script
+                dangerouslySetInnerHTML={{
+                  __html:
+                    `(() => {
+  const form = document.getElementById("meetup-signup-form");
+  const iframe = document.getElementById("meetup-signup-target");
+  const feedback = document.getElementById("meetup-signup-feedback");
+  if (!(form instanceof HTMLFormElement) || !(iframe instanceof HTMLIFrameElement) || !(feedback instanceof HTMLElement)) return;
+
+  let isSubmitting = false;
+  let timeoutId = null;
+
+  const setMessage = (type, message) => {
+    feedback.innerHTML = '<div class="alert alert-' + type + ' mt-2"><span>' + message + '</span></div>';
+  };
+
+  form.addEventListener("submit", () => {
+    isSubmitting = true;
+    setMessage("info", "Enviando cadastro...");
+
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      if (!isSubmitting) return;
+      isSubmitting = false;
+      setMessage("error", "Nao foi possivel enviar seu cadastro. Tente novamente.");
+    }, 15000);
+  });
+
+  iframe.addEventListener("load", () => {
+    if (!isSubmitting) return;
+    isSubmitting = false;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    form.reset();
+    setMessage("success", "Cadastro feito! Vamos te avisar quando as inscricoes abrirem.");
+  });
+})();`,
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

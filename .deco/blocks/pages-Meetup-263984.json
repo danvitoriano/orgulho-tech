@@ -16,7 +16,7 @@
       "lastNameFieldName": "lastName",
       "emailFieldName": "email",
       "whatsappFieldName": "whatsapp",
-      "openInNewTab": true
+      "openInNewTab": false
     },
     {
       "__resolveType": "site/sections/MeetupRecap.tsx",
