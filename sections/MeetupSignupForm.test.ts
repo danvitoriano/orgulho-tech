@@ -65,6 +65,11 @@ Deno.test("MeetupSignupForm keeps inline background submit behavior", async () =
     `const formatWhatsapp = (rawValue) =>`,
     "whatsapp mask formatter",
   );
+  assertIncludes(
+    source,
+    `rawValue.replace(/[^0-9]/g, "").slice(0, 11)`,
+    "whatsapp formatter strips non-digits safely",
+  );
 });
 
 Deno.test("Meetup page block pins openInNewTab=false and actionUrl", async () => {
