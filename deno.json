@@ -33,8 +33,9 @@
     "dev": "deno run -A --env --unstable --unstable-hmr dev.ts",
     "export:vercel": "deno run -A scripts/export-vercel.ts",
     "test:meetup": "deno test --allow-read sections/MeetupSignupForm.test.ts",
-    "test:e2e:meetup": "deno run -A npm:playwright install --with-deps chromium && deno test -A tests/meetup-signup.e2e.test.ts",
-    "test:predeploy": "deno task test:meetup && deno task test:e2e:meetup"
+    "test:e2e:meetup": "deno test -A tests/meetup-signup.e2e.test.ts",
+    "test:meetup:integration": "deno test -A tests/meetup-signup.integration.test.ts",
+    "test:predeploy": "deno task test:meetup && deno task test:meetup:integration"
   },
   "githooks": {
     "pre-commit": "check"
