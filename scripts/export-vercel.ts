@@ -7,6 +7,11 @@ import {
 const ROOT = dirname(dirname(fromFileUrl(import.meta.url)));
 const DIST_DIR = join(ROOT, "dist");
 const BASE_URL = "http://127.0.0.1:8000";
+const SERVER_TIMEOUT_MS = Number(
+  Deno.env.get("EXPORT_VERCEL_SERVER_TIMEOUT_MS") ?? "120000",
+);
+const SERVER_POLL_INTERVAL_MS = 1000;
+const LOG_TAIL_LIMIT = 8000;
 
 const PAGE_EXTENSIONS = new Set(["", "/"]);
 const pageQueue: string[] = ["/"];
@@ -16,9 +21,55 @@ const assetQueue = new Set<string>();
 const child = new Deno.Command(Deno.execPath(), {
   args: ["task", "preview"],
   cwd: ROOT,
-  stdout: "null",
-  stderr: "null",
+  stdout: "piped",
+  stderr: "piped",
 }).spawn();
+
+let previewStatus: Deno.CommandStatus | null = null;
+let previewStdoutTail = "";
+let previewStderrTail = "";
+
+function appendLogTail(current: string, chunk: string): string {
+  const combined = current + chunk;
+  if (combined.length <= LOG_TAIL_LIMIT) return combined;
+  return combined.slice(-LOG_TAIL_LIMIT);
+}
+
+async function captureStream(
+  stream: ReadableStream<Uint8Array> | null,
+  onChunk: (chunk: string) => void,
+): Promise<void> {
+  if (!stream) return;
+
+  const reader = stream.getReader();
+  const decoder = new TextDecoder();
+
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value) onChunk(decoder.decode(value, { stream: true }));
+    }
+
+    const tail = decoder.decode();
+    if (tail) onChunk(tail);
+  } finally {
+    reader.releaseLock();
+  }
+}
+
+const stdoutCapture = captureStream(child.stdout, (chunk) => {
+  previewStdoutTail = appendLogTail(previewStdoutTail, chunk);
+});
+
+const stderrCapture = captureStream(child.stderr, (chunk) => {
+  previewStderrTail = appendLogTail(previewStderrTail, chunk);
+});
+
+const previewStatusPromise = child.status.then((status) => {
+  previewStatus = status;
+  return status;
+});
 
 function decodeLiveImageURL(rawUrl: string): string {
   const normalized = rawUrl.replaceAll("&amp;", "&");
@@ -129,7 +180,15 @@ function collectLinksAndAssets(html: string, currentPath: string): void {
 }
 
 async function waitForServer(): Promise<void> {
-  for (let attempt = 0; attempt < 40; attempt++) {
+  const deadline = Date.now() + SERVER_TIMEOUT_MS;
+
+  while (Date.now() < deadline) {
+    if (previewStatus) {
+      throw new Error(
+        `Preview process exited early with code ${previewStatus.code}.`,
+      );
+    }
+
     try {
       const response = await fetch(BASE_URL, { redirect: "manual" });
       if (response.ok || response.status === 301 || response.status === 302) {
@@ -139,10 +198,14 @@ async function waitForServer(): Promise<void> {
       // Server is not ready yet.
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) =>
+      setTimeout(resolve, SERVER_POLL_INTERVAL_MS)
+    );
   }
 
-  throw new Error("Preview server did not start in time.");
+  throw new Error(
+    `Preview server did not start in time (${SERVER_TIMEOUT_MS}ms).`,
+  );
 }
 
 async function exportPages(): Promise<void> {
@@ -225,7 +288,28 @@ try {
   console.log(
     `Export completed. Pages: ${visitedPages.size}, Assets: ${assetQueue.size}`,
   );
+} catch (err) {
+  const stdoutTail = previewStdoutTail.trim();
+  const stderrTail = previewStderrTail.trim();
+  const details = [
+    err instanceof Error ? err.message : String(err),
+    stdoutTail ? `Preview stdout (tail):\n${stdoutTail}` : "",
+    stderrTail ? `Preview stderr (tail):\n${stderrTail}` : "",
+  ].filter(Boolean).join("\n\n");
+
+  throw new Error(details);
 } finally {
-  child.kill("SIGTERM");
-  await child.status;
+  if (!previewStatus) {
+    try {
+      child.kill("SIGTERM");
+    } catch {
+      // Preview process may have already exited.
+    }
+  }
+
+  await Promise.allSettled([
+    previewStatusPromise,
+    stdoutCapture,
+    stderrCapture,
+  ]);
 }
