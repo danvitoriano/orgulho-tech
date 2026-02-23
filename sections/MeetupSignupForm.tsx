@@ -67,7 +67,7 @@ export default function MeetupSignupForm({
               />
             )}
             <form
-              id="meetup-signup-form"
+              id="meetup-signup-form-element"
               action={actionUrl}
               method={method}
               target={useBackgroundSubmit ? "meetup-signup-target" : "_blank"}
@@ -139,7 +139,7 @@ export default function MeetupSignupForm({
                 dangerouslySetInnerHTML={{
                   __html:
                     `(() => {
-  const form = document.getElementById("meetup-signup-form");
+  const form = document.getElementById("meetup-signup-form-element");
   const iframe = document.getElementById("meetup-signup-target");
   const feedback = document.getElementById("meetup-signup-feedback");
   if (!(form instanceof HTMLFormElement) || !(iframe instanceof HTMLIFrameElement) || !(feedback instanceof HTMLElement)) return;
