@@ -32,13 +32,28 @@ Deno.test("MeetupSignupForm keeps inline background submit behavior", async () =
   );
   assertIncludes(
     source,
-    `id="meetup-signup-feedback"`,
-    "inline feedback container",
+    `id="meetup-signup-submit-button"`,
+    "submit button id",
   );
   assertIncludes(
     source,
-    `setMessage("success", "Cadastro feito!`,
-    "success feedback message",
+    `id="meetup-signup-status"`,
+    "inline status container",
+  );
+  assertIncludes(
+    source,
+    `showStatus("info", "Enviando cadastro...")`,
+    "sending status message",
+  );
+  assertIncludes(
+    source,
+    `showStatus("success", "Cadastro feito!`,
+    "success status message",
+  );
+  assertIncludes(
+    source,
+    `setTimeout(showButton, 5000)`,
+    "button restore timeout",
   );
 });
 

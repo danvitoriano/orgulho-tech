@@ -119,20 +119,26 @@ export default function MeetupSignupForm({
               </label>
 
               <div class="md:col-span-2 pt-2">
-                <button type="submit" class="btn btn-primary w-full">
-                  {submitLabel}
-                </button>
+                <div id="meetup-signup-action" class="w-full">
+                  <button
+                    id="meetup-signup-submit-button"
+                    type="submit"
+                    class="btn btn-primary w-full"
+                  >
+                    {submitLabel}
+                  </button>
+                  {useBackgroundSubmit && (
+                    <div
+                      id="meetup-signup-status"
+                      class="hidden"
+                      aria-live="polite"
+                    />
+                  )}
+                </div>
                 <p class="text-xs opacity-80 mt-2">
                   Este cadastro não garante vaga no meetup. Ele serve para avisar quando as inscrições forem abertas.
                 </p>
               </div>
-              {useBackgroundSubmit && (
-                <div
-                  id="meetup-signup-feedback"
-                  class="md:col-span-2 text-sm"
-                  aria-live="polite"
-                />
-              )}
             </form>
             {useBackgroundSubmit && (
               <script
@@ -141,37 +147,62 @@ export default function MeetupSignupForm({
                     `(() => {
   const form = document.getElementById("meetup-signup-form-element");
   const iframe = document.getElementById("meetup-signup-target");
-  const feedback = document.getElementById("meetup-signup-feedback");
-  if (!(form instanceof HTMLFormElement) || !(iframe instanceof HTMLIFrameElement) || !(feedback instanceof HTMLElement)) return;
+  const submitButton = document.getElementById("meetup-signup-submit-button");
+  const status = document.getElementById("meetup-signup-status");
+  if (
+    !(form instanceof HTMLFormElement) ||
+    !(iframe instanceof HTMLIFrameElement) ||
+    !(submitButton instanceof HTMLButtonElement) ||
+    !(status instanceof HTMLElement)
+  ) return;
 
   let isSubmitting = false;
-  let timeoutId = null;
+  let submitTimeoutId = null;
+  let restoreTimeoutId = null;
 
-  const setMessage = (type, message) => {
-    feedback.innerHTML = '<div class="alert alert-' + type + ' mt-2"><span>' + message + '</span></div>';
+  const showButton = () => {
+    submitButton.classList.remove("hidden");
+    submitButton.disabled = false;
+    status.classList.add("hidden");
+    status.innerHTML = "";
   };
 
-  form.addEventListener("submit", () => {
-    isSubmitting = true;
-    setMessage("info", "Enviando cadastro...");
+  const showStatus = (type, message) => {
+    submitButton.classList.add("hidden");
+    status.classList.remove("hidden");
+    status.innerHTML = '<div class="alert alert-' + type + '"><span>' + message + '</span></div>';
+  };
 
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
+  form.addEventListener("submit", (event) => {
+    if (isSubmitting) {
+      event.preventDefault();
+      return;
+    }
+
+    isSubmitting = true;
+    showStatus("info", "Enviando cadastro...");
+
+    if (submitTimeoutId) clearTimeout(submitTimeoutId);
+    if (restoreTimeoutId) clearTimeout(restoreTimeoutId);
+
+    submitTimeoutId = setTimeout(() => {
       if (!isSubmitting) return;
       isSubmitting = false;
-      setMessage("error", "Nao foi possivel enviar seu cadastro. Tente novamente.");
+      showStatus("error", "Nao foi possivel enviar seu cadastro. Tente novamente.");
+      restoreTimeoutId = setTimeout(showButton, 5000);
     }, 15000);
   });
 
   iframe.addEventListener("load", () => {
     if (!isSubmitting) return;
     isSubmitting = false;
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-      timeoutId = null;
+    if (submitTimeoutId) {
+      clearTimeout(submitTimeoutId);
+      submitTimeoutId = null;
     }
     form.reset();
-    setMessage("success", "Cadastro feito! Vamos te avisar quando as inscricoes abrirem.");
+    showStatus("success", "Cadastro feito! Vamos te avisar quando as inscricoes abrirem.");
+    restoreTimeoutId = setTimeout(showButton, 5000);
   });
 })();`,
                 }}

@@ -22,7 +22,7 @@ async function waitForServer(url: string, timeoutMs = 90_000): Promise<void> {
   throw new Error(`Preview server did not start in ${timeoutMs}ms`);
 }
 
-Deno.test("meetup signup shows success message inline", async () => {
+Deno.test("meetup signup swaps button for status and restores it after success", async () => {
   const preview = new Deno.Command(Deno.execPath(), {
     args: ["task", "preview"],
     stdout: "null",
@@ -48,15 +48,42 @@ Deno.test("meetup signup shows success message inline", async () => {
     const pagesBeforeSubmit = context.pages().length;
     await page.locator('#meetup-signup-form-element button[type="submit"]').click();
 
+    const sendingAlert = page.locator(
+      '#meetup-signup-status .alert-info:has-text("Enviando cadastro...")',
+    );
+    await sendingAlert.waitFor({ timeout: 5_000 });
+
     const successAlert = page.locator(
-      '#meetup-signup-feedback .alert-success:has-text("Cadastro feito!")',
+      '#meetup-signup-status .alert-success:has-text("Cadastro feito!")',
     );
     await successAlert.waitFor({ timeout: 20_000 });
+
+    await page.waitForTimeout(5_500);
 
     const pagesAfterSubmit = context.pages().length;
     assert(
       pagesAfterSubmit === pagesBeforeSubmit,
       "submit should not open a new tab/window",
+    );
+    assert(
+      await page.locator("#meetup-signup-submit-button").isVisible(),
+      "submit button should be visible again after success timeout",
+    );
+    assert(
+      (await page.locator('input[name="firstName"]').inputValue()) === "",
+      "firstName should be cleared after success",
+    );
+    assert(
+      (await page.locator('input[name="lastName"]').inputValue()) === "",
+      "lastName should be cleared after success",
+    );
+    assert(
+      (await page.locator('input[name="email"]').inputValue()) === "",
+      "email should be cleared after success",
+    );
+    assert(
+      (await page.locator('input[name="whatsapp"]').inputValue()) === "",
+      "whatsapp should be cleared after success",
     );
 
     await browser.close();
