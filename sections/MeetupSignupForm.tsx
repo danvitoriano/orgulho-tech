@@ -57,24 +57,12 @@ export default function MeetupSignupForm({
             </div>
 
             <form
-              hx-post="/api/meetup-signup"
-              hx-swap="innerHTML"
-              hx-target="#meetup-signup-feedback"
+              action={actionUrl}
+              method={method}
+              target={openInNewTab ? "_blank" : "_self"}
               class="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              <input type="hidden" name="scriptUrl" value={actionUrl} />
               <input type="hidden" name="source" value="meetup_pagina" />
-              <input
-                type="hidden"
-                name="successMessage"
-                value="Cadastro feito! Vamos te avisar quando as inscrições abrirem."
-              />
-              <input type="hidden" name="method" value={method} />
-              <input
-                type="hidden"
-                name="openInNewTab"
-                value={String(openInNewTab)}
-              />
               <label class="form-control w-full">
                 <span class="label-text mb-1">Nome</span>
                 <input
@@ -127,7 +115,6 @@ export default function MeetupSignupForm({
                   Este cadastro não garante vaga no meetup. Ele serve para avisar quando as inscrições forem abertas.
                 </p>
               </div>
-              <div id="meetup-signup-feedback" class="md:col-span-2"></div>
             </form>
           </div>
         </div>
